@@ -1,0 +1,206 @@
+<% 
+  card_bg_color = "#010508ff"   # dark blue-black background
+  font_color = "#f2f2f2"        # light text color
+  border_color = "rgba(255, 255, 255, 0.15)"  # subtle white border
+  border_hover_color = "rgba(255, 255, 255, 0.3)"
+%>
+
+<style>
+  .card-container {
+    color: <%= font_color %>;
+    max-width: 900px;
+    margin: 2rem auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    font-family: sans-serif;
+  }
+  .left-column, .right-column {
+    background-color: <%= card_bg_color %>;
+    border: 2px solid <%= border_color %>;
+    border-radius: 8px;
+    padding: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  .left-column:hover, .right-column:hover {
+    border-color: <%= border_hover_color %>;
+  }
+  img.poster {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  h2 {
+    margin-top: 0;
+  }
+  .overview, .trailer, .cast {
+    margin-bottom: 2rem;
+  }
+  .cast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+  }
+  .cast-member {
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.5rem;
+    border-radius: 6px;
+  }
+  .cast-member:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+  .cast-member img {
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+  }
+  .no-image {
+    width: 100%;
+    height: 278px;
+    background: #ccc;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+  }
+  a {
+    color: #70a1ff;
+    text-decoration: underline;
+  }
+  a:hover {
+    color: #4a6cd4;
+  }
+</style>
+
+<div class="card-container">
+
+  <!-- Left column: Poster + Info -->
+  <div class="left-column">
+    <% if @movie["poster_path"].present? %>
+      <img class="poster" src="https://image.tmdb.org/t/p/w500<%= @movie['poster_path'] %>" alt="<%= @movie['title'] %> poster">
+    <% end %>
+
+    <h1><%= @movie["title"] %></h1>
+
+    <p><strong>Release Date:</strong> <%= @movie["release_date"] %></p>
+    <p><strong>Runtime:</strong> <%= @movie["runtime"] %> minutes</p>
+    <p><strong>Rating:</strong> <%= @movie["vote_average"] %> / 10 (<%= @movie["vote_count"] %> votes)</p>
+    <p><strong>Genres:</strong> 
+      <%= @movie["genres"].map { |g| g["name"] }.join(", ") if @movie["genres"].present? %>
+    </p>
+
+    <p><strong>Status:</strong> <%= @movie["status"] %></p>
+    <p><strong>Budget:</strong> $<%= number_with_delimiter(@movie["budget"]) %></p>
+    <p><strong>Revenue:</strong> $<%= number_with_delimiter(@movie["revenue"]) %></p>
+
+    <p><strong>Official Website:</strong> 
+      <% if @movie["homepage"].present? %>
+        <a href="<%= @movie["homepage"] %>" target="_blank" rel="noopener noreferrer"><%= @movie["homepage"] %></a>
+      <% else %>
+        N/A
+      <% end %>
+    </p>
+
+    <p><strong>Spoken Languages:</strong> 
+      <%= @movie["spoken_languages"].map { |lang| lang["english_name"] }.join(", ") if @movie["spoken_languages"].present? %>
+    </p>
+
+    <h3>Director(s):</h3>
+    <% if @directors.any? %>
+      <ul>
+        <% @directors.each do |director| %>
+          <li><%= director["name"] %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No director info found.</p>
+    <% end %>
+  </div>
+
+  <!-- Right column: Overview + Trailer + Cast -->
+  <div class="right-column">
+
+    <!-- Overview -->
+    <div class="overview">
+      <h2>Overview</h2>
+      <p><%= @movie["overview"] %></p>
+      <% if @movie["tagline"].present? %>
+        <p style="font-style: italic; color: gray; margin-top: 1rem;">"<%= @movie["tagline"] %>"</p>
+      <% end %>
+    </div>
+
+    <!-- Trailer -->
+    <% trailer = @videos.find { |v| v["type"] == "Trailer" && v["site"] == "YouTube" } %>
+    <% if trailer %>
+      <div class="trailer" style="background-color: <%= card_bg_color %>; padding: 1rem; border-radius: 8px; border: 2px solid <%= border_color %>;">
+        <h2>Trailer</h2>
+
+        <div id="trailer-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-bottom: 1rem; background: #000; cursor: pointer;" onclick="loadTrailer()">
+          <!-- Thumbnail preview -->
+          <img 
+            src="https://img.youtube.com/vi/<%= trailer['key'] %>/hqdefault.jpg" 
+            alt="Trailer thumbnail" 
+            style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; object-fit: cover;"
+          />
+          <!-- Play button overlay -->
+          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 60px; color: white; opacity: 0.8;">&#9658;</div>
+        </div>
+      </div>
+
+      <script>
+        function loadTrailer() {
+          var container = document.getElementById('trailer-container');
+          var iframe = document.createElement('iframe');
+          iframe.setAttribute('src', 'https://www.youtube.com/embed/<%= trailer["key"] %>?autoplay=1');
+          iframe.setAttribute('frameborder', '0');
+          iframe.setAttribute('allowfullscreen', '');
+          iframe.style.position = 'absolute';
+          iframe.style.top = '0';
+          iframe.style.left = '0';
+          iframe.style.width = '100%';
+          iframe.style.height = '100%';
+
+          container.innerHTML = '';
+          container.appendChild(iframe);
+        }
+      </script>
+    <% end %>
+
+<!-- Cast -->
+<div class="cast" style="border: 2px solid <%= border_color %>; padding: 1rem; border-radius: 8px; background-color: <%= card_bg_color %>;">
+  <h2>Top Cast</h2>
+  <% if @cast.any? %>
+    <div class="cast-grid">
+      <% @cast.each do |actor| %>
+        <div class="cast-member">
+          <% if actor["profile_path"].present? %>
+            <img src="https://image.tmdb.org/t/p/w185<%= actor['profile_path'] %>" alt="<%= actor['name'] %>">
+          <% else %>
+            <div class="no-image">No Image</div>
+          <% end %>
+          <strong>
+            <%= link_to actor["name"], "https://www.google.com/search?q=#{URI.encode_www_form_component(actor['name'])}", target: "_blank", rel: "noopener noreferrer" %>
+          </strong>
+          <p style="font-size: 0.85rem; color: #666; margin: 0;"><em><%= actor["character"] %></em></p>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>No cast info found.</p>
+  <% end %>
+</div>
+
+
+  </div> <!-- end right column -->
+
+</div> <!-- end grid -->
+
+

@@ -1,0 +1,5 @@
+const grid = document.querySelector('#movie-grid');
+grid.insertAdjacentHTML('beforeend', `<%= j render partial: "movie_card", collection: @movies %>`);
+
+const button = document.getElementById('load-more-btn');
+button.dataset.page = parseInt(button.dataset.page) + 1;

@@ -1,0 +1,16 @@
+<!-- app/views/home/_movie_card.html.erb -->
+<%= link_to movie_path(movie["id"]), style: "text-decoration: none; color: inherit;" do %>
+  <div class="movie-card" style="text-align: center;">
+    <h2 style="font-weight: bold; font-size: 1rem;"><%= movie["title"] %></h2>
+    <p><%= movie["release_date"] %></p>
+
+    <% if movie["poster_path"].present? %>
+      <img src="https://image.tmdb.org/t/p/w500<%= movie['poster_path'] %>" alt="Poster" style="max-width: 100%; height: auto;" />
+    <% end %>
+
+    <p style="font-size: 0.8rem; margin-top: 0.5rem; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+      <%= movie["overview"] %>
+    </p>
+  </div>
+<% end %>
+
