@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
   def show
     # Safer API key handling with fallback
-    api_key = ENV.fetch("TMDB_API_KEY")
+    api_key = "12c051f57c49a893b585f23ed81567bd"
 
 
     # Guard clause: block invalid movie IDs
@@ -26,7 +26,7 @@ class MoviesController < ApplicationController
   end
 
   def surprise
-    api_key = ENV.fetch("TMDB_API_KEY")
+    api_key = "12c051f57c49a893b585f23ed81567bd"
 
     response = Faraday.get("https://api.themoviedb.org/3/movie/now_playing?api_key=#{api_key}")
     movies = JSON.parse(response.body)["results"]

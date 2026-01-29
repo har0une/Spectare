@@ -1,0 +1,11 @@
+<h1>Edit Member <%= @member.id %></h1>
+
+<%= form_with url: member_path(@member.id), method: :patch do %>
+  <div>
+    <label for="name">Name (stub)</label>
+    <input id="name" name="member[name]" type="text" />
+  </div>
+  <div>
+    <button type="submit">Save</button>
+  </div>
+<% end %>
