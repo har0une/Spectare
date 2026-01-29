@@ -1,24 +1,18 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
+This README would document whatever steps are necessary to get the
 application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version 3.4.8
 
-* System dependencies
+* Rails 8 upwards
 
-* Configuration
+* TMDB API KEY = "12c051f57c49a893b585f23ed81567bd"
 
-* Database creation
+* DATABASE SET-UP
+    db:prepare
+    db:migrate
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* might need the latest sqlite version
