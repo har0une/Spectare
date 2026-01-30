@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark" data-bs-theme="dark"
-     style="background: linear-gradient(90deg, #cff6faff 0%, #c2e8f3ff 1%, #9cd4e1ff 21%, #4dc0eaff 36%, #209ad2ff 61%, #08438bff 84%, #041628ff 100%); height: 84px; font-size: 150%;">
+     style="background: linear-gradient(90deg, rgb(153, 239, 248) 0%, rgb(140, 224, 247) 1%, rgb(79, 213, 243) 21%, rgb(58, 194, 243) 36%, rgb(37, 177, 241) 61%, rgb(8, 85, 180) 84%, #041628ff 100%); height: 84px; font-size: 150%;">
   
   <%= link_to root_path, class: "navbar-brand d-flex align-items-center", style: "color: black; font-size: 120%;" do %>
     <%= image_tag "pc.png", alt: "Spectare Neon Icon", style: "height: 80px; width: 100px; margin-right: -3px;" %>
-    <h3 style="text-align: center; font-size: 2.5rem; text-shadow: 0 0 6px #dee7e7ff;">Spectare</h3>
+    <h3 style="text-align: center; font-size: 3.5rem; text-shadow: 0 0 6px #dee7e7ff; font-family: gabriola; font-weight: bold;">Spectare</h3>
   <% end %>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,16 +13,25 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <%= link_to "About", about_path, class: "nav-link about-link", style: "color: blue; font-size: 80%;" %>
+        <%= link_to "About", about_path, class: "nav-link about-link", style: "color: black; font-size: 100%; font-weight: bold; font-family: gabriola" %>
       </li>
     </ul>
 
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="color: black;">
-      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-    </form>
 
-    <%= link_to "🎲 Surprise Me", "/movies/surprise", class: "btn btn-outline-primary ml-3 my-2 my-sm-0" %>
+      <button class="btn btn-outline-light" type="submit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+      </svg>
+      Search
+      </button>
+
+
+<%= link_to "/movies/surprise", class: "btn btn-outline-light ml-3 my-2 my-sm-0" do %>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shuffle" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M0 3.5A.5.5 0 0 1 .5 3H1c2.202 0 3.827 1.24 4.874 2.418.49.552.865 1.102 1.126 1.532.26-.43.636-.98 1.126-1.532C9.173 4.24 10.798 3 13 3v1c-1.798 0-3.173 1.01-4.126 2.082A9.6 9.6 0 0 0 7.556 8a9.6 9.6 0 0 0 1.317 1.918C9.828 10.99 11.204 12 13 12v1c-2.202 0-3.827-1.24-4.874-2.418A10.6 10.6 0 0 1 7 9.05c-.26.43-.636.98-1.126 1.532C4.827 11.76 3.202 13 1 13H.5a.5.5 0 0 1 0-1H1c1.798 0 3.173-1.01 4.126-2.082A9.6 9.6 0 0 0 6.444 8a9.6 9.6 0 0 0-1.317-1.918C4.172 5.01 2.796 4 1 4H.5a.5.5 0 0 1-.5-.5"/>
+    <path d="M13 5.466V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192m0 9v-3.932a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192"/>
+  </svg>
+<% end %>
   </div>
 </nav>
 
