@@ -9,7 +9,7 @@ Things you may want to cover:
 
 * Rails 8 upwards
 
-* TMDB API KEY = "12c051f57c49a893b585f23ed81567bd"
+* TMDB API KEY = 
 
 * DATABASE SET-UP
     db:prepare
