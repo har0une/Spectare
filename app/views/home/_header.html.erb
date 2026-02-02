@@ -2,20 +2,20 @@
   <% if user_signed_in? %>
 
     <!-- Welcome bar -->
-    <div style="height: 32px; background-color: #121212; color: #fff; text-align: center; line-height: 32px; font-size: 14px;">
+    <div style="height: 32px; background-color: #dde1e2; color: #000000; text-align: center; line-height: 32px; font-size: 14px;">
       Welcome back, <strong><%= current_user.email %></strong>!
     </div>
 
     <!-- Main navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark"
          data-bs-theme="dark"
-         style="background: linear-gradient(90deg, rgb(252,252,252) 0%, rgb(218,220,221) 1%, rgb(189,189,189) 21%, rgb(156,156,156) 36%, rgb(97,97,97) 61%, rgb(50,50,51) 84%, rgb(12,12,12) 100%);
+         style="background: linear-gradient(90deg, rgb(253, 255, 255) 0%, rgb(235, 237, 240) 1%, rgb(189,189,189) 21%, rgb(156,156,156) 36%, rgb(59, 60, 61) 61%, rgb(18, 19, 19) 84%, rgb(0, 0, 0) 100%);
                 height: 84px; font-size: 150%;">
 
       <%= link_to root_path, class: "navbar-brand d-flex align-items-center", style: "color: black; font-size: 120%;" do %>
-        <%= image_tag "pc.png", alt: "Spectare Neon Icon",
-              style: "height: 80px; width: 100px; margin-right: -3px;" %>
-        <h3 style="font-size: 2.5rem; text-shadow: 0 0 6px #dee7e7ff;">Spectare</h3>
+        <%= image_tag "si.png", alt: "Spectare Neon Icon",
+              style: "height: 50px; width: 70px; margin-right: -17px;" %>
+        <h4 style="font-size: 2.5rem; text-shadow: 0 0 6px #dee7e7ff;">pectare</h4>
       <% end %>
 
       <button class="navbar-toggler" type="button"
@@ -25,37 +25,45 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto">
-
+        <!-- Left links -->
+        <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <%= link_to "About", about_path,
                   class: "nav-link",
-                  style: "color: black; font-size: 80%;" %>
-          </li>
-
-        </ul>
-
-        <form class="d-flex me-3">
-          <button class="btn btn-light" type="submit">Search</button>
-        </form>
-
-<li class="nav-item">
-  <%= link_to "Recommend",
-        movies_surprise_path,
-        class: "nav-link",
-        style: "color: black; font-size: 80%;" %>
-</li>
-
-
-
-<%= button_to "Logout",
-      destroy_user_session_path,
-      method: :delete,
-      class: "nav-link btn btn-link",
-      form: { style: "display:inline" } %>
-
+                  style: "color: black; font-size: 80%; font-weight: bold; margin-top: 8px;" %>
           </li>
         </ul>
+
+        <!-- Right buttons -->
+        <div class="ml-auto d-flex align-items-center">
+          <!-- Search -->
+          <div class="mr-2">
+            <form class="d-flex m-0">
+              <button class="btn btn-outline-light p-2" type="submit" title="Search">
+                <i class="bi bi-search"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- Shuffle / Recommend -->
+          <div class="mr-2">
+            <%= link_to "/movies/surprise", class: "btn btn-outline-light p-2", title: "Recommend" do %>
+              <i class="bi bi-shuffle"></i>
+            <% end %>
+          </div>
+
+          <!-- Logout -->
+          <div>
+            <%= button_to destroy_user_session_path,
+                  method: :delete,
+                  class: "nav-link btn btn-danger p-2",
+                  form: { style: "display:inline" },
+                  title: "Logout" do %>
+              <i class="bi bi-box-arrow-right"></i>
+            <% end %>
+          </div>
+        </div>
+
       </div>
     </nav>
 
@@ -63,7 +71,7 @@
 
     <!-- Navbar for logged-out users -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <%= link_to "Sign up", new_user_registration_path, class: "nav-link" %>
         </li>
@@ -75,7 +83,3 @@
 
   <% end %>
 </nav>
-
-
-
-
