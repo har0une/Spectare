@@ -1,0 +1,6 @@
+<% flash.each do |type, message| %>
+  <div class="alert alert-<%= type == "notice" ? "success" : "danger" %> text-center fade show auto-dismiss"
+       role="alert">
+    <%= message %>
+  </div>
+<% end %>
