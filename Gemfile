@@ -42,7 +42,6 @@ gem 'thruster', require: false
 
 
 gem 'devise'
-gem 'dotenv-rails', groups: %i[development test]
 gem 'faraday'
 gem 'tailwindcss-rails'
 
@@ -59,11 +58,11 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem 'rubocop-rails-omakase', require: false
-
-  # Gemfile
-  gem 'dotenv-rails', groups: [:development, :test]
-
 end
+  # Gemfile
+  gem 'dotenv-rails'
+
+
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]

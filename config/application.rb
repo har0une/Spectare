@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 # main rails application class
-require 'dotenv/rails-now'
+begin
+  require 'dotenv/rails-now'
+rescue LoadError
+  # ignore in CI or if dotenv gem is missing
+end
+
 require_relative 'boot'
 
 require 'rails/all'
