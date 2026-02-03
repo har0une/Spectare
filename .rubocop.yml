@@ -1,8 +1,34 @@
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+# .rubocop.yml
+AllCops:
+  TargetRubyVersion: 3.4
+  NewCops: enable
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/queue_schema.rb'
+    - 'config/initializers/**/*.rb'
+    - 'bin/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'log/**/*'
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+# Enable auto-correctable cops
+Layout/TrailingEmptyLines:
+  Enabled: true
+Layout/LeadingCommentSpace:
+  Enabled: true
+
+# Disable complex method metrics if you want to skip them
+Metrics/AbcSize:
+  Exclude:
+    - 'app/controllers/**/*'
+Metrics/MethodLength:
+  Exclude:
+    - 'app/controllers/**/*'
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'app/controllers/**/*'
+
+# Optional: ignore OpenStruct warnings if you want
+Style/OpenStructUse:
+  Exclude:
+    - 'app/controllers/members_controller.rb'

@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
+# Controller for handling member actions.
 class MembersController < ApplicationController
-  require 'ostruct'
+  # Struct representing a member (used in edit action).
+  MemberStruct = Struct.new(:id)
 
   def edit
-    @member = OpenStruct.new(id: params[:id])
+    @member = MemberStruct.new(params[:id])
   end
 
   def update
