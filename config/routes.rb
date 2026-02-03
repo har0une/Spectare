@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get "/movies/surprise", to: "movies#surprise"  # Put this first
   resources :movies, only: [ :show ]
   get "about", to: "home#about"
+   get "/profile", to: "profiles#show", as: :profile
   # Minimal members routes so /members/:id/edit is available
   resources :members, only: [ :edit, :update ]
 end

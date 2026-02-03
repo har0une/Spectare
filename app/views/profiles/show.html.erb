@@ -1,0 +1,47 @@
+<div class="container mt-5">
+
+  <h2 class="mb-4 d-flex align-items-center" style="color: #0dcaf0;"> <!-- Title color -->
+    <i class="bi bi-person-circle mr-2" style="color: #0dcaf0;"></i> <!-- Icon color -->
+    Your Profile
+  </h2>
+
+  <!-- User info -->
+  <div class="card mb-4" style="background-color: #212529; color: #ffffff; border-radius: 1rem;"> <!-- Card BG and text color -->
+    <div class="card-body">
+      <p><strong>Email:</strong> <%= current_user.email %></p>
+      <p><strong>Member since:</strong> <%= current_user.created_at.strftime("%B %Y") %></p>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="list-group mb-4">
+
+    <%= link_to "#", class: "list-group-item list-group-item-action", style: "background-color: #343a40; color: #ffffff;" do %> <!-- BG and text -->
+      <i class="bi bi-bookmark-heart mr-2" style="color: #0dcaf0;"></i> <!-- Icon color -->
+      Watchlist
+    <% end %>
+
+    <%= link_to "#", class: "list-group-item list-group-item-action", style: "background-color: #343a40; color: #ffffff;" do %>
+      <i class="bi bi-save mr-2" style="color: #0dcaf0;"></i>
+      Saved Movies
+    <% end %>
+
+    <%= link_to edit_user_registration_path,
+          class: "list-group-item list-group-item-action",
+          style: "background-color: #343a40; color: #ffffff;" do %>
+      <i class="bi bi-gear mr-2" style="color: #0dcaf0;"></i>
+      Account Settings
+    <% end %>
+
+  </div>
+
+  <!-- Logout -->
+  <%= button_to destroy_user_session_path,
+        method: :delete,
+        class: "btn",
+        style: "background-color: #dc3545; color: #ffffff;" do %> <!-- Button color -->
+    <i class="bi bi-box-arrow-right mr-2"></i>
+    Logout
+  <% end %>
+
+</div>
