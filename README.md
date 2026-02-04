@@ -7,12 +7,10 @@ Things you may want to cover:
 
 * Ruby version 3.4.8
 
-* Rails 8 upwards
-
-* TMDB API KEY 
+* Rails 8 upwards 
 
 * DATABASE SET-UP
     db:prepare
     db:migrate
 
-* might need the latest sqlite version
+Trigger github actions workflow
