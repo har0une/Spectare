@@ -2,8 +2,11 @@
 
 # Model representing a user.
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # Make sure Devise modules are included
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+         
+  has_many :watchlists
+  has_many :likes
+  has_many :ratings
 end

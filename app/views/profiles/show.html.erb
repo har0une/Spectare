@@ -1,35 +1,50 @@
 <div class="container mt-5">
 
-  <h2 class="mb-4 d-flex align-items-center" style="color: #0dcaf0;"> <!-- Title color -->
-    <i class="bi bi-person-circle mr-2" style="color: #0dcaf0;"></i> <!-- Icon color -->
+  <h2 class="mb-4 d-flex align-items-center" style="color: #0dcaf0;">
+    <i class="bi bi-person-circle me-2"></i>
     Your Profile
   </h2>
 
   <!-- User info -->
-  <div class="card mb-4" style="background-color: #212529; color: #ffffff; border-radius: 1rem;"> <!-- Card BG and text color -->
+  <div class="card mb-4" style="background-color: #212529; color: #ffffff; border-radius: 1rem;">
     <div class="card-body">
       <p><strong>Email:</strong> <%= current_user.email %></p>
       <p><strong>Member since:</strong> <%= current_user.created_at.strftime("%B %Y") %></p>
     </div>
   </div>
 
-  <!-- Actions -->
+  <!-- Profile actions -->
   <div class="list-group mb-4">
 
-    <%= link_to "#", class: "list-group-item list-group-item-action", style: "background-color: #25292e; color: #ffffff;" do %> <!-- BG and text -->
-      <i class="bi bi-bookmark-heart mr-2" style="color: #0dcaf0;"></i> <!-- Icon color -->
+    <!-- Watchlist -->
+    <%= link_to profile_watchlist_path,
+          class: "list-group-item list-group-item-action",
+          style: "background-color: #25292e; color: #ffffff;" do %>
+      <i class="bi bi-bookmark-heart me-2" style="color: #0dcaf0;"></i>
       Watchlist
     <% end %>
 
-    <%= link_to "#", class: "list-group-item list-group-item-action", style: "background-color: #343a40; color: #ffffff;" do %>
-      <i class="bi bi-save mr-2" style="color: #0dcaf0;"></i>
-      Saved Movies
+    <!-- Liked movies -->
+    <%= link_to profile_favorites_path,
+          class: "list-group-item list-group-item-action",
+          style: "background-color: #343a40; color: #ffffff;" do %>
+      <i class="bi bi-hand-thumbs-up me-2" style="color: #0dcaf0;"></i>
+      Liked Movies
     <% end %>
 
+    <!-- Rated movies -->
+    <%= link_to profile_ratings_path,
+          class: "list-group-item list-group-item-action",
+          style: "background-color: #25292e; color: #ffffff;" do %>
+      <i class="bi bi-star-fill me-2" style="color: #f0ad4e;"></i>
+      Rated Movies
+    <% end %>
+
+    <!-- Account settings -->
     <%= link_to edit_user_registration_path,
           class: "list-group-item list-group-item-action",
           style: "background-color: #343a40; color: #ffffff;" do %>
-      <i class="bi bi-gear mr-2" style="color: #0dcaf0;"></i>
+      <i class="bi bi-gear me-2" style="color: #0dcaf0;"></i>
       Account Settings
     <% end %>
 
@@ -38,9 +53,9 @@
   <!-- Logout -->
   <%= button_to destroy_user_session_path,
         method: :delete,
-        class: "btn",
-        style: "background-color: #dc3545; color: #ffffff;" do %> <!-- Button color -->
-    <i class="bi bi-box-arrow-right mr-2"></i>
+        class: "btn w-150",
+        style: "background-color: #dc3545; color: #ffffff;" do %>
+    <i class="bi bi-box-arrow-right me-2"></i>
     Logout
   <% end %>
 

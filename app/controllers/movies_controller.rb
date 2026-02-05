@@ -25,7 +25,7 @@ class MoviesController < ApplicationController
   end
 
   def surprise
-    api_key = '12c051f57c49a893b585f23ed81568bd'
+    api_key = '12c051f57c49a893b585f23ed81567bd'
 
     response = Faraday.get("https://api.themoviedb.org/3/movie/now_playing?api_key=#{api_key}")
     movies = JSON.parse(response.body)['results']

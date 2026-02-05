@@ -1,0 +1,30 @@
+<h2 class="mb-4" style="color: #f0ad4e;">
+  <i class="bi bi-star-fill me-2"></i>
+  Rated Movies
+</h2>
+
+<% if @rated_movies.any? %>
+  <div class="row">
+    <% @rated_movies.each do |movie| %>
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="card h-100" style="background-color: #212529; border-radius: 1rem;">
+          <% if movie['poster_path'].present? %>
+            <%= image_tag "https://image.tmdb.org/t/p/w500#{movie['poster_path']}",
+                          class: "card-img-top", alt: movie['title'] %>
+          <% end %>
+          <div class="card-body text-white">
+            <h6 class="card-title"><%= movie['title'] %></h6>
+            <p class="mb-0">Your Rating: <strong><%= movie['user_rating'] %>/10</strong></p>
+          </div>
+          <div class="card-footer text-center" style="background-color: transparent;">
+            <%= link_to movie_path(movie['id']), class: "btn btn-outline-info btn-sm" do %>
+              View
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="alert alert-secondary text-center">You haven't rated any movies yet.</div>
+<% end %>

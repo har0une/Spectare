@@ -1,0 +1,24 @@
+<% if @watchlist_movies.any? %>
+  <div class="row">
+    <% @watchlist_movies.each do |movie| %>
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="card h-100" style="background-color: #212529; border-radius: 1rem;">
+          <% if movie['poster_path'].present? %>
+            <%= image_tag "https://image.tmdb.org/t/p/w500#{movie['poster_path']}",
+                          class: "card-img-top", alt: movie['title'] %>
+          <% end %>
+          <div class="card-body text-white">
+            <h6 class="card-title"><%= movie['title'] %></h6>
+          </div>
+          <div class="card-footer text-center" style="background-color: transparent;">
+            <%= link_to movie_path(movie['id']), class: "btn btn-outline-info btn-sm" do %>
+              View
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="alert alert-secondary text-center">Your watchlist is empty.</div>
+<% end %>

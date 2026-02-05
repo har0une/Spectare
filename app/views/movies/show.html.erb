@@ -1,7 +1,7 @@
 <% 
-  card_bg_color = "#010508ff"   # dark blue-black background
-  font_color = "#f2f2f2"        # light text color
-  border_color = "rgba(255, 255, 255, 0.15)"  # subtle white border
+  card_bg_color = "#010508ff"
+  font_color = "#f2f2f2"
+  border_color = "rgba(255, 255, 255, 0.15)"
   border_hover_color = "rgba(255, 255, 255, 0.3)"
 %>
 
@@ -82,7 +82,7 @@
 
 <div class="card-container">
 
-  <!-- Left column: Poster + Info -->
+  <!-- Left column -->
   <div class="left-column">
     <% if @movie["poster_path"].present? %>
       <img class="poster" src="https://image.tmdb.org/t/p/w500<%= @movie['poster_path'] %>" alt="<%= @movie['title'] %> poster">
@@ -93,7 +93,8 @@
     <p><strong>Release Date:</strong> <%= @movie["release_date"] %></p>
     <p><strong>Runtime:</strong> <%= @movie["runtime"] %> minutes</p>
     <p><strong>Rating:</strong> <%= @movie["vote_average"] %> / 10 (<%= @movie["vote_count"] %> votes)</p>
-    <p><strong>Genres:</strong> 
+
+    <p><strong>Genres:</strong>
       <%= @movie["genres"].map { |g| g["name"] }.join(", ") if @movie["genres"].present? %>
     </p>
 
@@ -101,7 +102,7 @@
     <p><strong>Budget:</strong> $<%= number_with_delimiter(@movie["budget"]) %></p>
     <p><strong>Revenue:</strong> $<%= number_with_delimiter(@movie["revenue"]) %></p>
 
-    <p><strong>Official Website:</strong> 
+    <p><strong>Official Website:</strong>
       <% if @movie["homepage"].present? %>
         <a href="<%= @movie["homepage"] %>" target="_blank" rel="noopener noreferrer"><%= @movie["homepage"] %></a>
       <% else %>
@@ -109,8 +110,8 @@
       <% end %>
     </p>
 
-    <p><strong>Spoken Languages:</strong> 
-      <%= @movie["spoken_languages"].map { |lang| lang["english_name"] }.join(", ") if @movie["spoken_languages"].present? %>
+    <p><strong>Spoken Languages:</strong>
+      <%= @movie["spoken_languages"].map { |l| l["english_name"] }.join(", ") if @movie["spoken_languages"].present? %>
     </p>
 
     <h3>Director(s):</h3>
@@ -123,84 +124,119 @@
     <% else %>
       <p>No director info found.</p>
     <% end %>
+
+    <!-- Watchlist -->
+    <div class="mb-2">
+      <% if user_signed_in? %>
+        <% if current_user.watchlists.exists?(movie_id: @movie["id"]) %>
+          <%= button_to remove_from_watchlist_profile_path(movie_id: @movie["id"]),
+                method: :delete,
+                class: "btn btn-outline-warning btn-sm d-flex align-items-center gap-1" do %>
+            <i class="bi bi-bookmark-fill"></i> Remove Watchlist
+          <% end %>
+        <% else %>
+          <%= button_to add_to_watchlist_profile_path(movie_id: @movie["id"]),
+                method: :post,
+                class: "btn btn-outline-info btn-sm d-flex align-items-center gap-1" do %>
+            <i class="bi bi-bookmark"></i> Add Watchlist
+          <% end %>
+        <% end %>
+      <% else %>
+        <%= link_to new_user_session_path,
+              class: "btn btn-outline-info btn-sm d-flex align-items-center gap-1" do %>
+          <i class="bi bi-bookmark"></i> Sign in to Save
+        <% end %>
+      <% end %>
+    </div>
+
+    <!-- Like -->
+    <div class="mb-2">
+      <% if user_signed_in? %>
+        <% if current_user.likes.exists?(movie_id: @movie["id"]) %>
+          <%= button_to remove_from_favorites_profile_path(movie_id: @movie["id"]),
+                method: :delete,
+                class: "btn btn-outline-danger btn-sm d-flex align-items-center gap-1" do %>
+            <i class="bi bi-hand-thumbs-up-fill"></i> Unlike
+          <% end %>
+        <% else %>
+          <%= button_to add_to_favorites_profile_path(movie_id: @movie["id"]),
+                method: :post,
+                class: "btn btn-outline-success btn-sm d-flex align-items-center gap-1" do %>
+            <i class="bi bi-hand-thumbs-up"></i> Like
+          <% end %>
+        <% end %>
+      <% else %>
+        <%= link_to new_user_session_path,
+              class: "btn btn-outline-success btn-sm d-flex align-items-center gap-1" do %>
+          <i class="bi bi-hand-thumbs-up"></i> Sign in to Like
+        <% end %>
+      <% end %>
+    </div>
+
+    <!-- Rate -->
+    <div class="mb-2">
+      <%= link_to new_profile_rating_path(movie_id: @movie["id"]),
+            class: "btn btn-outline-warning btn-sm d-flex align-items-center gap-1" do %>
+        <i class="bi bi-star"></i> Rate Movie
+      <% end %>
+    </div>
+
   </div>
 
-  <!-- Right column: Overview + Trailer + Cast -->
+  <!-- Right column -->
   <div class="right-column">
 
-    <!-- Overview -->
     <div class="overview">
       <h2>Overview</h2>
       <p><%= @movie["overview"] %></p>
       <% if @movie["tagline"].present? %>
-        <p style="font-style: italic; color: gray; margin-top: 1rem;">"<%= @movie["tagline"] %>"</p>
+        <p style="font-style: italic; color: gray;">"<%= @movie["tagline"] %>"</p>
       <% end %>
     </div>
 
-    <!-- Trailer -->
     <% trailer = @videos.find { |v| v["type"] == "Trailer" && v["site"] == "YouTube" } %>
     <% if trailer %>
-      <div class="trailer" style="background-color: <%= card_bg_color %>; padding: 1rem; border-radius: 8px; border: 2px solid <%= border_color %>;">
+      <div class="trailer">
         <h2>Trailer</h2>
-
-        <div id="trailer-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-bottom: 1rem; background: #000; cursor: pointer;" onclick="loadTrailer()">
-          <!-- Thumbnail preview -->
-          <img 
-            src="https://img.youtube.com/vi/<%= trailer['key'] %>/hqdefault.jpg" 
-            alt="Trailer thumbnail" 
-            style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; object-fit: cover;"
-          />
-          <!-- Play button overlay -->
-          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 60px; color: white; opacity: 0.8;">&#9658;</div>
+        <div id="trailer-container"
+             style="position: relative; padding-bottom: 56.25%; height: 0; cursor: pointer;"
+             onclick="loadTrailer()">
+          <img src="https://img.youtube.com/vi/<%= trailer['key'] %>/hqdefault.jpg"
+               style="width:100%; position:absolute;">
+          <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:60px;">▶</div>
         </div>
       </div>
 
       <script>
         function loadTrailer() {
-          var container = document.getElementById('trailer-container');
-          var iframe = document.createElement('iframe');
-          iframe.setAttribute('src', 'https://www.youtube.com/embed/<%= trailer["key"] %>?autoplay=1');
-          iframe.setAttribute('frameborder', '0');
-          iframe.setAttribute('allowfullscreen', '');
-          iframe.style.position = 'absolute';
-          iframe.style.top = '0';
-          iframe.style.left = '0';
-          iframe.style.width = '100%';
-          iframe.style.height = '100%';
-
-          container.innerHTML = '';
-          container.appendChild(iframe);
+          var c = document.getElementById('trailer-container');
+          c.innerHTML = '<iframe src="https://www.youtube.com/embed/<%= trailer["key"] %>?autoplay=1" frameborder="0" allowfullscreen style="width:100%;height:100%;position:absolute;"></iframe>';
         }
       </script>
     <% end %>
 
-<!-- Cast -->
-<div class="cast" style="border: 2px solid <%= border_color %>; padding: 1rem; border-radius: 8px; background-color: <%= card_bg_color %>;">
-  <h2>Top Cast</h2>
-  <% if @cast.any? %>
-    <div class="cast-grid">
-      <% @cast.each do |actor| %>
-        <div class="cast-member">
-          <% if actor["profile_path"].present? %>
-            <img src="https://image.tmdb.org/t/p/w185<%= actor['profile_path'] %>" alt="<%= actor['name'] %>">
-          <% else %>
-            <div class="no-image">No Image</div>
-          <% end %>
-          <strong>
-            <%= link_to actor["name"], "https://www.google.com/search?q=#{URI.encode_www_form_component(actor['name'])}", target: "_blank", rel: "noopener noreferrer" %>
-          </strong>
-          <p style="font-size: 0.85rem; color: #666; margin: 0;"><em><%= actor["character"] %></em></p>
-        </div>
-      <% end %>
+    <div class="cast">
+      <h2>Top Cast</h2>
+      <div class="cast-grid">
+        <% @cast.each do |actor| %>
+          <div class="cast-member">
+            <% if actor["profile_path"].present? %>
+              <img src="https://image.tmdb.org/t/p/w185<%= actor['profile_path'] %>">
+            <% else %>
+              <div class="no-image">No Image</div>
+            <% end %>
+            <strong><%= actor["name"] %></strong>
+            <p><em><%= actor["character"] %></em></p>
+          </div>
+        <% end %>
+      </div>
     </div>
-  <% else %>
-    <p>No cast info found.</p>
-  <% end %>
+
+  </div>
 </div>
 
 
-  </div> <!-- end right column -->
 
-</div> <!-- end grid -->
+
 
 
