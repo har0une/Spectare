@@ -2,7 +2,7 @@
   <div class="row">
     <% @watchlist_movies.each do |movie| %>
       <div class="col-md-3 col-sm-6 mb-4">
-        <div class="card h-100" style="background-color: #212529; border-radius: 1rem;">
+        <div class="card h-100" style="background-color: rgb(13, 15, 15); border-radius: 1rem;">
           <% if movie['poster_path'].present? %>
             <%= image_tag "https://image.tmdb.org/t/p/w500#{movie['poster_path']}",
                           class: "card-img-top", alt: movie['title'] %>

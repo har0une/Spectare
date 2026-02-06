@@ -1,5 +1,5 @@
 <% 
-  card_bg_color = "#010508ff"
+  card_bg_color = "rgb(13, 15, 15)"
   font_color = "#f2f2f2"
   border_color = "rgba(255, 255, 255, 0.15)"
   border_hover_color = "rgba(255, 255, 255, 0.3)"
@@ -62,7 +62,7 @@
   }
   .no-image {
     width: 100%;
-    height: 278px;
+    height: 160px;
     background: #ccc;
     border-radius: 6px;
     margin-bottom: 0.5rem;
@@ -88,21 +88,21 @@
       <img class="poster" src="https://image.tmdb.org/t/p/w500<%= @movie['poster_path'] %>" alt="<%= @movie['title'] %> poster">
     <% end %>
 
-    <h1><%= @movie["title"] %></h1>
+    <h1 style="font-weight: bold;"><%= @movie["title"] %></h1>
 
-    <p><strong>Release Date:</strong> <%= @movie["release_date"] %></p>
-    <p><strong>Runtime:</strong> <%= @movie["runtime"] %> minutes</p>
-    <p><strong>Rating:</strong> <%= @movie["vote_average"] %> / 10 (<%= @movie["vote_count"] %> votes)</p>
+    <p><strong style="color: #39a6eaff;">Release Date:</strong> <%= @movie["release_date"] %></p>
+    <p><strong style="color: #39a6eaff;">Runtime:</strong> <%= @movie["runtime"] %> minutes</p>
+    <p><strong style="color: #39a6eaff;">Rating:</strong> <%= @movie["vote_average"] %> / 10 (<%= @movie["vote_count"] %> votes)</p>
 
-    <p><strong>Genres:</strong>
+    <p><strong style="color: #39a6eaff;">Genres:</strong>
       <%= @movie["genres"].map { |g| g["name"] }.join(", ") if @movie["genres"].present? %>
     </p>
 
-    <p><strong>Status:</strong> <%= @movie["status"] %></p>
-    <p><strong>Budget:</strong> $<%= number_with_delimiter(@movie["budget"]) %></p>
-    <p><strong>Revenue:</strong> $<%= number_with_delimiter(@movie["revenue"]) %></p>
+    <p><strong style="color: #39a6eaff;">Status:</strong> <%= @movie["status"] %></p>
+    <p><strong style="color: #39a6eaff;">Budget:</strong> $<%= number_with_delimiter(@movie["budget"]) %></p>
+    <p><strong style="color: #39a6eaff;">Revenue:</strong> $<%= number_with_delimiter(@movie["revenue"]) %></p>
 
-    <p><strong>Official Website:</strong>
+    <p><strong style="color: #39a6eaff;">Official Website:</strong>
       <% if @movie["homepage"].present? %>
         <a href="<%= @movie["homepage"] %>" target="_blank" rel="noopener noreferrer"><%= @movie["homepage"] %></a>
       <% else %>
@@ -110,11 +110,11 @@
       <% end %>
     </p>
 
-    <p><strong>Spoken Languages:</strong>
+    <p><strong style="color: #39a6eaff;">Spoken Languages:</strong>
       <%= @movie["spoken_languages"].map { |l| l["english_name"] }.join(", ") if @movie["spoken_languages"].present? %>
     </p>
 
-    <h3>Director(s):</h3>
+    <h3 style="color: #39a6eaff;">Director(s):</h3>
     <% if @directors.any? %>
       <ul>
         <% @directors.each do |director| %>
@@ -187,7 +187,7 @@
   <div class="right-column">
 
     <div class="overview">
-      <h2>Overview</h2>
+      <h2 style="color: #39a6eaff;">Overview</h2>
       <p><%= @movie["overview"] %></p>
       <% if @movie["tagline"].present? %>
         <p style="font-style: italic; color: gray;">"<%= @movie["tagline"] %>"</p>
@@ -197,7 +197,7 @@
     <% trailer = @videos.find { |v| v["type"] == "Trailer" && v["site"] == "YouTube" } %>
     <% if trailer %>
       <div class="trailer">
-        <h2>Trailer</h2>
+        <h2 style="color: #39a6eaff;">Trailer</h2>
         <div id="trailer-container"
              style="position: relative; padding-bottom: 56.25%; height: 0; cursor: pointer;"
              onclick="loadTrailer()">
@@ -214,9 +214,9 @@
         }
       </script>
     <% end %>
-
+<br><br><br>
     <div class="cast">
-      <h2>Top Cast</h2>
+      <h2 style="color: #39a6eaff;">Top Cast</h2>
       <div class="cast-grid">
         <% @cast.each do |actor| %>
           <div class="cast-member">

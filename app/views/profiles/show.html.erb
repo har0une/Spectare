@@ -6,7 +6,7 @@
   </h2>
 
   <!-- User info -->
-  <div class="card mb-4" style="background-color: #212529; color: #ffffff; border-radius: 1rem;">
+  <div class="card mb-4" style="background-color: rgb(13, 15, 15); color: #ffffff; border-radius: 1rem;">
     <div class="card-body">
       <p><strong>Email:</strong> <%= current_user.email %></p>
       <p><strong>Member since:</strong> <%= current_user.created_at.strftime("%B %Y") %></p>
@@ -19,7 +19,7 @@
     <!-- Watchlist -->
     <%= link_to profile_watchlist_path,
           class: "list-group-item list-group-item-action",
-          style: "background-color: #25292e; color: #ffffff;" do %>
+          style: "background-color: rgb(13, 15, 15); color: #ffffff;" do %>
       <i class="bi bi-bookmark-heart me-2" style="color: #0dcaf0;"></i>
       Watchlist
     <% end %>
@@ -27,7 +27,7 @@
     <!-- Liked movies -->
     <%= link_to profile_favorites_path,
           class: "list-group-item list-group-item-action",
-          style: "background-color: #343a40; color: #ffffff;" do %>
+          style: "background-color: rgb(13, 15, 15); color: #ffffff;" do %>
       <i class="bi bi-hand-thumbs-up me-2" style="color: #0dcaf0;"></i>
       Liked Movies
     <% end %>
@@ -35,7 +35,7 @@
     <!-- Rated movies -->
     <%= link_to profile_ratings_path,
           class: "list-group-item list-group-item-action",
-          style: "background-color: #25292e; color: #ffffff;" do %>
+          style: "background-color: rgb(13, 15, 15); color: #ffffff;" do %>
       <i class="bi bi-star-fill me-2" style="color: #f0ad4e;"></i>
       Rated Movies
     <% end %>
@@ -43,7 +43,7 @@
     <!-- Account settings -->
     <%= link_to edit_user_registration_path,
           class: "list-group-item list-group-item-action",
-          style: "background-color: #343a40; color: #ffffff;" do %>
+          style: "background-color: rgb(13, 15, 15); color: #ffffff;" do %>
       <i class="bi bi-gear me-2" style="color: #0dcaf0;"></i>
       Account Settings
     <% end %>
